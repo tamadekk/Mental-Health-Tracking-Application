@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mental Health Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Home</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome, {{ user.username }}</h2>
+
+        <section>
+            <h3>Your Mental Health Journey</h3>
+            <ul>
+                <li><a href="{% url 'mood-entries' %}">View Mood Entries</a></li>
+                <li><a href="{% url 'add-mood-entry' %}">Add a Mood Entry</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Your Goals</h3>
+            <ul>
+                <li><a href="{% url 'daily-goals' %}">View Daily Goals</a></li>
+                <li><a href="{% url 'add-daily-goal' %}">Set a New Goal</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Therapists</h3>
+            <ul>
+                <li><a href="{% url 'therapists-list' %}">Find Therapists</a></li>
+            </ul>
+        </section>
+
+        {% if user.is_staff %}
+        <section>
+            <h3>Admin Tools</h3>
+            <ul>
+                <li><a href="{% url 'admin:auth_user_changelist' %}">Manage Users</a></li>
+                <li><a href="{% url 'admin:main_therapist_changelist' %}">Manage Therapists</a></li>
+                <li><a href="#">View System Logs</a></li>
+            </ul>
+        </section>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Goals - Mental Health Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Daily Goals</h1>
+    </header>
+    <main>
+        <ul>
+            {% for goal in daily_goals %}
+                <li>{{ goal.date }} - {{ goal.goal }} (Completed: {{ goal.is_completed }})</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'add-daily-goal' %}">Add a New Goal</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+</body>
+</html>

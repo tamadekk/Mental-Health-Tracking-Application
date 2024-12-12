@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Entries - Mental Health Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Mood Entries</h1>
+    </header>
+    <main>
+        <ul>
+            {% for entry in mood_entries %}
+                <li>{{ entry.created_at }} - {{ entry.mood }}: {{ entry.notes }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'add-mood-entry' %}">Add a New Mood Entry</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+</body>
+</html>

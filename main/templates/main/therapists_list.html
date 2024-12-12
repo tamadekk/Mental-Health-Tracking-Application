@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapists List - Mental Health Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Therapists List</h1>
+    </header>
+    <main>
+        <ul>
+            {% for therapist in therapists %}
+                <li>{{ therapist.name }} - {{ therapist.specialization }} - {{ therapist.contact_email }}</li>
+            {% endfor %}
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+</body>
+</html>
