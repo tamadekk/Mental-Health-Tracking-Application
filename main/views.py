@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 
-from main.forms import DailyGoalForm
+from main.forms import DailyGoalForm, MoodEntryForm
 from main.models.therapist import Therapist
 from .models import MoodEntry, DailyGoal
 
@@ -56,8 +56,7 @@ def manage_users(request):
 
 @login_required
 def mood_entries(request):
-    # TODO: Implement filtering by user if desired
-    mood_entries = MoodEntry.objects.all()
+    mood_entries = MoodEntry.objects.filter(user=request.user)
     return render(request, 'main/mood_entries.html', {'mood_entries': mood_entries})
 
 
@@ -70,11 +69,15 @@ def view_goals(request):
 @login_required
 def add_mood_entry(request):
     if request.method == 'POST':
-        # TODO: Implement logic to create and save a new MoodEntry object
-        # Consider using a form or validating user input
-        pass
-    return render(request, 'main/add_mood_entry.html')
-
+        form = MoodEntryForm(request.POST)
+        if form.is_valid():
+            mood_entry = form.save(commit=False)
+            mood_entry.user = request.user
+            mood_entry.save()
+            return redirect('mood-entries')
+    else:
+        form = MoodEntryForm()
+    return render(request, 'main/add_mood_entry.html', {'form': form})
 
 
 @login_required
@@ -85,7 +88,7 @@ def daily_goals(request):
             goal = form.save(commit=False)
             goal.user = request.user
             goal.save()
-            return redirect('daily_goals')
+            return redirect('daily-goals')
     else:
         form = DailyGoalForm()
     goals = DailyGoal.objects.filter(user=request.user)
@@ -100,14 +103,19 @@ def add_daily_goal(request):
             goal = form.save(commit=False)
             goal.user = request.user
             goal.save()
-            return redirect('daily_goals')
+            return redirect('daily-goals')
     else:
         form = DailyGoalForm()
     goals = DailyGoal.objects.filter(user=request.user)
-    return render(request, 'main/add_daily_goal.html')
+    context = {
+        'form': form,
+        'goals': goals,
+        'date_picker': True  # Pass context to enable date picker in template
+    }
+    return render(request, 'main/add_daily_goal.html', context)
 
 
 @login_required
 def therapists_list(request):
-    therapists = Therapist.objects.all()  # TODO: Replace with actual query logic or API integration
+    therapists = Therapist.objects.all()
     return render(request, 'main/therapists_list.html', {'therapists': therapists})

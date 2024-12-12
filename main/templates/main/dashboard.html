@@ -9,18 +9,13 @@
 </head>
 <body>
     <header>
-        <h1>Dashboard</h1>
         <nav>
-            <ul>
-                <li><a href="{% url 'dashboard' %}">Home</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-            </ul>
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'logout' %}">Logout</a>
         </nav>
     </header>
-
     <main>
-        <h2>Welcome, {{ user.username }}</h2>
-
+        <h1>Welcome, {{ user.username }}</h1>
         <section>
             <h3>Your Mental Health Journey</h3>
             <ul>
@@ -28,7 +23,6 @@
                 <li><a href="{% url 'add-mood-entry' %}">Add a Mood Entry</a></li>
             </ul>
         </section>
-
         <section>
             <h3>Your Goals</h3>
             <ul>
@@ -36,14 +30,12 @@
                 <li><a href="{% url 'add-daily-goal' %}">Set a New Goal</a></li>
             </ul>
         </section>
-
         <section>
             <h3>Therapists</h3>
             <ul>
                 <li><a href="{% url 'therapists-list' %}">Find Therapists</a></li>
             </ul>
         </section>
-
         {% if user.is_staff %}
         <section>
             <h3>Admin Tools</h3>
@@ -55,7 +47,6 @@
         </section>
         {% endif %}
     </main>
-
     <footer>
         <p>&copy; 2024 Mental Health Tracker</p>
     </footer>

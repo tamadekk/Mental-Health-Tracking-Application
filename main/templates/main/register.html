@@ -4,30 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Mental Health Tracker</title>
-    {% load static %} <!-- Load the static tag library -->
-    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
     <header>
-        <h1>Register for Mental Health Tracker</h1>
         <nav>
-            <ul>
-  
-                <li><a href="{% url 'login' %}">Login</a></li>
-            </ul>
+            <a href="{% url 'login' %}">Login</a>
         </nav>
     </header>
-
     <main>
-        <h2>Create Your Account</h2>
+        <h1>Register for Mental Health Tracker</h1>
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Register</button>
+            <div>
+                <label for="id_date_of_birth">Date of Birth</label>
+                <input type="date" name="date_of_birth" id="id_date_of_birth" value="{{ form.date_of_birth.value }}" class="form-input">
+            </div>
+            <div>
+                <label for="id_gender">Gender</label>
+                <select name="gender" id="id_gender" class="form-input">
+                    <option value="Male" {% if form.gender.value == 'Male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if form.gender.value == 'Female' %}selected{% endif %}>Female</option>
+                    <option value="Other" {% if form.gender.value == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Register</button>
         </form>
         <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
     </main>
-
     <footer>
         <p>&copy; 2024 Mental Health Tracker</p>
     </footer>

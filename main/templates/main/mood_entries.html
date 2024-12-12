@@ -9,15 +9,19 @@
 </head>
 <body>
     <header>
-        <h1>Mood Entries</h1>
+        <nav>
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
     </header>
     <main>
+        <h1>Mood Entries</h1>
         <ul>
             {% for entry in mood_entries %}
                 <li>{{ entry.created_at }} - {{ entry.mood }}: {{ entry.notes }}</li>
             {% endfor %}
         </ul>
-        <a href="{% url 'add-mood-entry' %}">Add a New Mood Entry</a>
+        <a href="{% url 'add-mood-entry' %}" class="btn">Add a New Mood Entry</a>
     </main>
     <footer>
         <p>&copy; 2024 Mental Health Tracker</p>

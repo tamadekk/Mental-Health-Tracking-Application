@@ -9,9 +9,13 @@
 </head>
 <body>
     <header>
-        <h1>Daily Goals</h1>
+        <nav>
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
     </header>
     <main>
+        <h1>Your Daily Goals</h1>
         <ul>
             {% for goal in daily_goals %}
                 <li>{{ goal.date }} - {{ goal.goal }} (Completed: {{ goal.is_completed }})</li>

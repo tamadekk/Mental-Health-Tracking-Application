@@ -1,13 +1,20 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile, DailyGoal
+from .models import UserProfile, DailyGoal, MoodEntry
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField()
     date_of_birth = forms.DateField(required=False)
     gender = forms.ChoiceField(choices=UserProfile.gender, required=False)
-
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(),
+        help_text=None
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(),
+        help_text=None 
+    )
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'date_of_birth', 'gender']
@@ -25,3 +32,8 @@ class DailyGoalForm(forms.ModelForm):
     class Meta:
         model = DailyGoal
         fields = ['goal', 'date']
+
+class MoodEntryForm(forms.ModelForm):
+    class Meta:
+        model = MoodEntry
+        fields = ['mood', 'notes']

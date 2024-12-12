@@ -9,9 +9,13 @@
 </head>
 <body>
     <header>
-        <h1>Logged Out</h1>
+        <nav>
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'login' %}">Login</a>
+        </nav>
     </header>
     <main>
+        <h1>Logged Out</h1>
         <p>You have successfully logged out. <a href="{% url 'login' %}">Click here to log in again</a>.</p>
     </main>
     <footer>

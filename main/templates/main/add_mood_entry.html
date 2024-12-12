@@ -9,13 +9,17 @@
 </head>
 <body>
     <header>
-        <h1>Add Mood Entry</h1>
+        <nav>
+            <a href="{% url 'dashboard' %}">Home</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
     </header>
     <main>
+        <h1>Add Mood Entry</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Save</button>
+            <button type="submit" class="btn">Save</button>
         </form>
     </main>
     <footer>
