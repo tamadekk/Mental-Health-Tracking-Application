@@ -20,6 +20,7 @@
             {% for therapist in therapists %}
                 <li>
                     <strong>{{ therapist.name }}</strong> - {{ therapist.specialization }} <br>
+                    <p>Contact phone: <strong>{{ therapist.phone_number }}</strong></p>
                     <a href="mailto:{{ therapist.contact_email }}">{{ therapist.contact_email }}</a>
                 </li>
             {% endfor %}
