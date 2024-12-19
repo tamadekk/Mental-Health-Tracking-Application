@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ mood_entry.mood }} - Mood Entry Details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'mood-entries' %}">Back to Mood Entries</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Mood Entry Details</h1>
+      <p><strong>User:</strong> {{ mood_entry.user.username }}</p>
+      <p><strong>Mood:</strong> {{ mood_entry.mood }}</p>
+      <p><strong>Notes:</strong> {{ mood_entry.notes }}</p>
+      <p><strong>Created At:</strong> {{ mood_entry.created_at }}</p>
+      <a href="{% url 'mood-entries' %}" class="btn">Back to Mood Entries</a>
+    </main>
+    <footer>
+      <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+  </body>
+</html>

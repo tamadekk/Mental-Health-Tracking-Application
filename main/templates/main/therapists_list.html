@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Therapists List - Mental Health Tracker</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
     <header>
-        <nav>
-            <a href="{% url 'dashboard' %}">Home</a>
-            <a href="{% url 'logout' %}">Logout</a>
-        </nav>
+      <nav>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
     </header>
     <main>
-        <h1>Therapists List</h1>
-        <ul>
-            {% for therapist in therapists %}
-                <li>
-                    <strong>{{ therapist.name }}</strong> - {{ therapist.specialization }} <br>
-                    <p>Contact phone: <strong>{{ therapist.phone_number }}</strong></p>
-                    <a href="mailto:{{ therapist.contact_email }}">{{ therapist.contact_email }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+      <h1>Therapists List</h1>
+
+      <form
+        method="get"
+        action="{% url 'therapists-list' %}"
+        class="search-form"
+      >
+        <input
+          type="text"
+          name="q"
+          placeholder="Search therapists by Specialization"
+          value="{{ search_query }}"
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {% if therapists.count == 0 %}
+      <p class="no-results">
+        No therapists found matching your search criteria.
+      </p>
+      {% else %}
+      <ul>
+        {% for therapist in therapists %}
+        <li>
+          <strong>
+            <a href="{% url 'therapist-detail' therapist.pk %}"
+              >{{ therapist.name }}</a
+            >
+          </strong>
+          - {{ therapist.specialization }} <br />
+          <p>Contact phone: <strong>{{ therapist.phone_number }}</strong></p>
+          <a href="mailto:{{ therapist.contact_email }}"
+            >{{ therapist.contact_email }}</a
+          >
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </main>
     <footer>
-        <p>&copy; 2024 Mental Health Tracker</p>
+      <p>&copy; 2024 Mental Health Tracker</p>
     </footer>
-</body>
+  </body>
 </html>

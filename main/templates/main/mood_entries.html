@@ -1,30 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mood Entries - Mental Health Tracker</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
     <header>
-        <nav>
-            <a href="{% url 'dashboard' %}">Home</a>
-            <a href="{% url 'logout' %}">Logout</a>
-        </nav>
+      <nav>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
     </header>
     <main>
-        <h1>Mood Entries</h1>
-        <ul>
-            {% for entry in mood_entries %}
-                <li>{{ entry.created_at }} - {{ entry.mood }}: {{ entry.notes }}</li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'add-mood-entry' %}" class="btn">Add a New Mood Entry</a>
+      <h1>Mood Entries</h1>
+
+      <form method="get" action="{% url 'mood-entries' %}" class="search-form">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search mood entries by Notes"
+          value="{{ request.GET.q }}"
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {% if mood_entries.count == 0 %}
+      <p class="no-results">
+        No mood entries found matching your search criteria.
+      </p>
+      {% else %}
+      <ul>
+        {% for entry in mood_entries %}
+        <li class="mood-entry-item">
+          <div class="mood-entry-header">
+            <strong>
+              <a
+                href="{% url 'mood-entry-detail' entry.pk %}"
+                class="entry-date-link"
+              >
+                {{ entry.created_at|date:"F j, Y" }}
+              </a> </strong
+            ><br />
+            <span class="entry-mood">{{ entry.mood }}</span>
+          </div>
+          <div class="mood-entry-details">
+            <p><strong>Note:</strong> {{ entry.notes }}</p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      <a href="{% url 'add-mood-entry' %}" class="btn">Add a New Mood Entry</a>
     </main>
     <footer>
-        <p>&copy; 2024 Mental Health Tracker</p>
+      <p>&copy; 2024 Mental Health Tracker</p>
     </footer>
-</body>
+  </body>
 </html>

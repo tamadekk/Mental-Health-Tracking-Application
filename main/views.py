@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.forms import UserCreationForm
 
 from main.forms import DailyGoalForm, MoodEntryForm
@@ -110,7 +111,7 @@ def add_daily_goal(request):
     context = {
         'form': form,
         'goals': goals,
-        'date_picker': True  # Pass context to enable date picker in template
+        'date_picker': True
     }
     return render(request, 'main/add_daily_goal.html', context)
 
@@ -119,3 +120,62 @@ def add_daily_goal(request):
 def therapists_list(request):
     therapists = Therapist.objects.all()
     return render(request, 'main/therapists_list.html', {'therapists': therapists})
+
+
+class DailyGoalListView(ListView):
+    model = DailyGoal
+    template_name = 'main/daily_goals.html'
+    context_object_name = 'goals'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(user=self.request.user)
+        search_query = self.request.GET.get('q', '')
+        if search_query:
+            queryset = queryset.filter(goal__icontains=search_query)
+        return queryset
+
+class MoodEntryListView(ListView):
+    model = MoodEntry
+    template_name = 'main/mood_entries.html'
+    context_object_name = 'mood_entries'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(user=self.request.user)
+        search_query = self.request.GET.get('q', '')
+        if search_query:
+            queryset = queryset.filter(notes__icontains=search_query)
+        return queryset
+
+
+def TherapistListView(request):
+    search_query = request.GET.get('q', '')
+    therapists = Therapist.objects.all()
+
+    if search_query:
+        therapists = therapists.filter(
+            specialization__icontains=search_query)
+
+    return render(request, 'main/therapists_list.html', {
+        'therapists': therapists,
+        'search_query': search_query
+    })
+
+def TherapistDetailView(request, pk):
+    therapist = Therapist.objects.get(pk=pk)
+    return render(request, 'main/therapist_detail.html', {
+        'therapist': therapist
+    })
+
+
+class DailyGoalDetailView(DetailView):
+    model = DailyGoal
+    template_name = 'main/daily_goal_detail.html' 
+    context_object_name = 'daily_goal'
+
+class MoodEntryDetailView(DetailView):
+    model = MoodEntry
+    template_name = 'main/mood_entry_detail.html' 
+    context_object_name = 'mood_entry'
+

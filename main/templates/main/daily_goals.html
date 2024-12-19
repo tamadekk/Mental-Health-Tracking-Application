@@ -1,30 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Goals - Mental Health Tracker</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Daily Goals - Mental Health Tracker</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
     <header>
-        <nav>
-            <a href="{% url 'dashboard' %}">Home</a>
-            <a href="{% url 'logout' %}">Logout</a>
-        </nav>
+      <nav>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
     </header>
     <main>
-        <h1>Your Daily Goals</h1>
-        <ul>
-            {% for goal in daily_goals %}
-                <li>{{ goal.date }} - {{ goal.goal }} (Completed: {{ goal.is_completed }})</li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'add-daily-goal' %}">Add a New Goal</a>
+      <h1>Your Daily Goals</h1>
+
+      <form method="get" action="{% url 'daily-goals' %}" class="search-form">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search goals by Name"
+          value="{{ request.GET.q }}"
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {% if goals.count == 0 %}
+      <p class="no-results">No goals found matching your search criteria.</p>
+      {% else %}
+      <ul>
+        {% for goal in goals %}
+        <li class="goal-item">
+          <div class="goal-header">
+            <strong>
+              <span class="goal-date">
+                {{ goal.date|date:"F j, Y" }}
+              </span> </strong
+            ><br />
+          </div>
+          <div class="goal-details">
+            <div>
+              <p class="goal-text">
+                <strong>Title: </strong>
+                <a href="{% url 'daily-goal-detail' goal.pk %}"
+                  >{{ goal.goal }}</a
+                >
+              </p>
+            </div>
+            <p class="goal-user">
+              <strong>Assigned to:</strong> {{ goal.user.username }}
+            </p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      <a href="{% url 'add-daily-goal' %}" class="btn">Add a New Goal</a>
     </main>
     <footer>
-        <p>&copy; 2024 Mental Health Tracker</p>
+      <p>&copy; 2024 Mental Health Tracker</p>
     </footer>
-</body>
+  </body>
 </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ therapist.name }} - Therapist Details</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'therapists-list' %}">Back to Therapists List</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
+    </header>
+    <main>
+      <h1>{{ therapist.name }} - Therapist Details</h1>
+      <p><strong>Name:</strong> {{ therapist.name }}</p>
+      <p><strong>Specialization:</strong> {{ therapist.specialization }}</p>
+      <p><strong>Contact phone:</strong> {{ therapist.phone_number }}</p>
+      <p>
+        <strong>Email:</strong>
+        <a href="mailto:{{ therapist.contact_email }}"
+          >{{ therapist.contact_email }}</a
+        >
+      </p>
+      <a href="{% url 'therapists-list' %}" class="btn"
+        >Back to Therapists List</a
+      >
+    </main>
+    <footer>
+      <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+  </body>
+</html>
