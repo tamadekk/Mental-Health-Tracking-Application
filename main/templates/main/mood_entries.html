@@ -24,6 +24,14 @@
           placeholder="Search mood entries by Notes"
           value="{{ request.GET.q }}"
         />
+        <select name="mood">
+          <option value="">All Moods</option>
+          <option value="Happy" {% if request.GET.mood == "Happy" %}selected{% endif %}>Happy</option>
+          <option value="Sad" {% if request.GET.mood == "Sad" %}selected{% endif %}>Sad</option>
+          <option value="Angry" {% if request.GET.mood == "Angry" %}selected{% endif %}>Angry</option>
+          <option value="Stressed" {% if request.GET.mood == "Stressed" %}selected{% endif %}>Stressed</option>
+          <option value="Neutral" {% if request.GET.mood == "Neutral" %}selected{% endif %}>Neutral</option>
+        </select>
         <button type="submit">Search</button>
       </form>
 

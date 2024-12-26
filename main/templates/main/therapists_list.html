@@ -17,17 +17,20 @@
     <main>
       <h1>Therapists List</h1>
 
-      <form
-        method="get"
-        action="{% url 'therapists-list' %}"
-        class="search-form"
-      >
+      <form method="get" action="{% url 'therapists-list' %}" class="search-form">
         <input
           type="text"
           name="q"
-          placeholder="Search therapists by Specialization"
-          value="{{ search_query }}"
+          placeholder="Search therapists by Name"
+          value="{{ request.GET.q }}"
         />
+        <select name="specialization">
+          <option value="">All Specializations</option>
+          <option value="Psychologist" {% if request.GET.specialization == "Psychologist" %}selected{% endif %}>Psychologist</option>
+          <option value="Psychiatrist" {% if request.GET.specialization == "Psychiatrist" %}selected{% endif %}>Psychiatrist</option>
+          <option value="Counselor" {% if request.GET.specialization == "Counselor" %}selected{% endif %}>Counselor</option>
+          <option value="Therapist" {% if request.GET.specialization == "Therapist" %}selected{% endif %}>Therapist</option>
+        </select>
         <button type="submit">Search</button>
       </form>
 

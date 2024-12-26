@@ -29,6 +29,8 @@ class UserRegistrationForm(UserCreationForm):
 
 
 class DailyGoalForm(forms.ModelForm):
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
     class Meta:
         model = DailyGoal
         fields = ['goal', 'date']

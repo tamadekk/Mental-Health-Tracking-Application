@@ -132,8 +132,11 @@ class DailyGoalListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset().filter(user=self.request.user)
         search_query = self.request.GET.get('q', '')
+        date_filter = self.request.GET.get('date', '')
         if search_query:
             queryset = queryset.filter(goal__icontains=search_query)
+        if date_filter:
+            queryset = queryset.filter(date=date_filter)
         return queryset
 
 class MoodEntryListView(ListView):
@@ -145,23 +148,30 @@ class MoodEntryListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset().filter(user=self.request.user)
         search_query = self.request.GET.get('q', '')
+        mood_filter = self.request.GET.get('mood', '')
         if search_query:
             queryset = queryset.filter(notes__icontains=search_query)
+        if mood_filter:
+            queryset = queryset.filter(mood=mood_filter)
         return queryset
 
 
-def TherapistListView(request):
-    search_query = request.GET.get('q', '')
-    therapists = Therapist.objects.all()
+class TherapistListView(ListView):
+    model = Therapist
+    template_name = 'main/therapists_list.html'
+    context_object_name = 'therapists'
+    paginate_by = 10
 
-    if search_query:
-        therapists = therapists.filter(
-            specialization__icontains=search_query)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('q', '')
+        specialization_filter = self.request.GET.get('specialization', '')
+        if search_query:
+            queryset = queryset.filter(name__icontains=search_query)
+        if specialization_filter:
+            queryset = queryset.filter(specialization=specialization_filter)
+        return queryset
 
-    return render(request, 'main/therapists_list.html', {
-        'therapists': therapists,
-        'search_query': search_query
-    })
 
 def TherapistDetailView(request, pk):
     therapist = Therapist.objects.get(pk=pk)
