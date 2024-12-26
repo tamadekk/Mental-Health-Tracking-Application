@@ -196,7 +196,7 @@ def update_therapist(request, pk):
     form = TherapistForm(request.POST, instance=therapist)
     if form.is_valid():
         form.save()
-        return redirect('therapists-list')
+        return redirect('therapist-detail', pk=therapist.pk)
     return render(request, 'main/edit_therapist.html', {'form': form, 'therapist': therapist})
 
 @login_required
@@ -220,7 +220,7 @@ def update_daily_goal(request, pk):
     form = DailyGoalForm(request.POST, instance=goal)
     if form.is_valid():
         form.save()
-        return redirect('daily-goals')
+        return redirect('daily-goal-detail', pk=goal.pk)
     return render(request, 'main/edit_daily_goal.html', {'form': form, 'goal': goal})
 
 @login_required
@@ -243,7 +243,7 @@ def update_mood_entry(request, pk):
     form = MoodEntryForm(request.POST, instance=mood_entry)
     if form.is_valid():
         form.save()
-        return redirect('mood-entries')
+        return redirect('mood-entry-detail', pk=mood_entry.pk)
     return render(request, 'main/edit_mood_entry.html', {'form': form, 'mood_entry': mood_entry})
 
 @login_required
