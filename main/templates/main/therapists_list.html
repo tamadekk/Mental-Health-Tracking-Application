@@ -60,7 +60,7 @@
           <form
             method="post"
             action="{% url 'delete-therapist' therapist.pk %}"
-            style="display: inline"
+            style="display: inline; border: 0; background-color: transparent"
             onsubmit="return confirm('Are you sure you want to delete this therapist?');"
           >
             {% csrf_token %}
