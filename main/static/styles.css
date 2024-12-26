@@ -302,3 +302,7 @@ table tr:hover {
   color: #f44336;
   font-weight: bold;
 }
+.errorlist {
+  color: red;
+  font-weight: bold;
+}
