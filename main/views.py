@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.forms import UserCreationForm
+from django.views.decorators.http import require_POST
 
-from main.forms import DailyGoalForm, MoodEntryForm
+from main.forms import DailyGoalForm, MoodEntryForm, TherapistForm
 from main.models.therapist import Therapist
 from .models import MoodEntry, DailyGoal
 
@@ -178,4 +179,77 @@ class MoodEntryDetailView(DetailView):
     model = MoodEntry
     template_name = 'main/mood_entry_detail.html' 
     context_object_name = 'mood_entry'
+
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def edit_therapist(request, pk):
+    therapist = get_object_or_404(Therapist, pk=pk)
+    form = TherapistForm(instance=therapist)
+    return render(request, 'main/edit_therapist.html', {'form': form, 'therapist': therapist})
+
+@login_required
+@require_POST
+@user_passes_test(lambda u: u.is_superuser)
+def update_therapist(request, pk):
+    therapist = get_object_or_404(Therapist, pk=pk)
+    form = TherapistForm(request.POST, instance=therapist)
+    if form.is_valid():
+        form.save()
+        return redirect('therapists-list')
+    return render(request, 'main/edit_therapist.html', {'form': form, 'therapist': therapist})
+
+@login_required
+@require_POST
+@user_passes_test(lambda u: u.is_superuser)
+def delete_therapist(request, pk):
+    therapist = get_object_or_404(Therapist, pk=pk)
+    therapist.delete()
+    return redirect('therapists-list')
+
+@login_required
+def edit_daily_goal(request, pk):
+    goal = get_object_or_404(DailyGoal, pk=pk, user=request.user)
+    form = DailyGoalForm(instance=goal)
+    return render(request, 'main/edit_daily_goal.html', {'form': form, 'goal': goal})
+
+@login_required
+@require_POST
+def update_daily_goal(request, pk):
+    goal = get_object_or_404(DailyGoal, pk=pk, user=request.user)
+    form = DailyGoalForm(request.POST, instance=goal)
+    if form.is_valid():
+        form.save()
+        return redirect('daily-goals')
+    return render(request, 'main/edit_daily_goal.html', {'form': form, 'goal': goal})
+
+@login_required
+@require_POST
+def delete_daily_goal(request, pk):
+    goal = get_object_or_404(DailyGoal, pk=pk, user=request.user)
+    goal.delete()
+    return redirect('daily-goals')
+
+@login_required
+def edit_mood_entry(request, pk):
+    mood_entry = get_object_or_404(MoodEntry, pk=pk, user=request.user)
+    form = MoodEntryForm(instance=mood_entry)
+    return render(request, 'main/edit_mood_entry.html', {'form': form, 'mood_entry': mood_entry})
+
+@login_required
+@require_POST
+def update_mood_entry(request, pk):
+    mood_entry = get_object_or_404(MoodEntry, pk=pk, user=request.user)
+    form = MoodEntryForm(request.POST, instance=mood_entry)
+    if form.is_valid():
+        form.save()
+        return redirect('mood-entries')
+    return render(request, 'main/edit_mood_entry.html', {'form': form, 'mood_entry': mood_entry})
+
+@login_required
+@require_POST
+def delete_mood_entry(request, pk):
+    mood_entry = get_object_or_404(MoodEntry, pk=pk, user=request.user)
+    mood_entry.delete()
+    return redirect('mood-entries')
 

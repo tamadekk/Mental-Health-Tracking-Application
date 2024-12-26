@@ -48,6 +48,27 @@
           </div>
           <div class="mood-entry-details">
             <p><strong>Note:</strong> {{ entry.notes }}</p>
+            <a
+              href="{% url 'edit-mood-entry' entry.pk %}"
+              class="btn btn-primary btn-sm"
+              style="width: auto"
+              >Edit</a
+            >
+            <form
+              method="post"
+              action="{% url 'delete-mood-entry' entry.pk %}"
+              style="display: inline; border: 0; background-color: transparent"
+              onsubmit="return confirm('Are you sure you want to delete this mood entry?');"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="btn btn-danger btn-sm"
+                style="width: auto"
+              >
+                Delete
+              </button>
+            </form>
           </div>
         </li>
         {% endfor %}

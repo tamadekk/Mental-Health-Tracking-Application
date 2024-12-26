@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Mood Entry - Mental Health Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Edit Mood Entry</h1>
+      <form method="post" action="{% url 'update-mood-entry' mood_entry.pk %}">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="btn btn-success btn-sm">Update</button>
+      </form>
+    </main>
+    <footer>
+      <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+  </body>
+</html>

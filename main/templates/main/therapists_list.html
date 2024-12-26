@@ -49,6 +49,30 @@
           <a href="mailto:{{ therapist.contact_email }}"
             >{{ therapist.contact_email }}</a
           >
+          <br />
+          {% if user.is_superuser %}
+          <a
+            href="{% url 'edit-therapist' therapist.pk %}"
+            class="btn btn-primary btn-sm"
+            style="width: auto"
+            >Edit</a
+          >
+          <form
+            method="post"
+            action="{% url 'delete-therapist' therapist.pk %}"
+            style="display: inline"
+            onsubmit="return confirm('Are you sure you want to delete this therapist?');"
+          >
+            {% csrf_token %}
+            <button
+              type="submit"
+              class="btn btn-danger btn-sm"
+              style="width: auto"
+            >
+              Delete
+            </button>
+          </form>
+          {% endif %}
         </li>
         {% endfor %}
       </ul>
