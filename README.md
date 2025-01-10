@@ -32,3 +32,4 @@ Before you begin, ensure you have the following installed:
     pip install -r requirements.txt
     ```
 
+## Author Vladyslav Raduta
