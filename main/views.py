@@ -280,3 +280,29 @@ def assign_patient(request):
 def view_my_therapists(request):
     therapist_patients = TherapistPatient.objects.filter(patient=request.user)
     return render(request, 'main/view_my_therapists.html', {'therapist_patients': therapist_patients})
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name__in=['Therapist', 'Admin']).exists())
+def assign_patient(request):
+    if request.method == 'POST':
+        form = AssignPatientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Patient has been successfully assigned to the therapist.')
+            return redirect('assign-patient')
+    else:
+        form = AssignPatientForm()
+    return render(request, 'main/assign_patient.html', {'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='Patient').exists())
+def view_my_therapists(request):
+    therapist_patients = TherapistPatient.objects.filter(patient=request.user)
+    if 'assigned' in request.GET:
+        messages.success(request, 'You have been successfully assigned to a therapist.')
+    return render(request, 'main/view_my_therapists.html', {'therapist_patients': therapist_patients})
+
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='Patient').exists())
+def request_new_therapist(request):
+    messages.success(request, 'Your request for a new therapist has been submitted.')
+    return redirect('view-my-therapists')

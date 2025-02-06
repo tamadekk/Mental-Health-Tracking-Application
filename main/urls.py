@@ -27,4 +27,7 @@ urlpatterns = [
     path('therapist/delete/<int:pk>/', views.delete_therapist, name='delete-therapist'),
     path('assign-patient/', views.assign_patient, name='assign-patient'),
     path('my-therapists/', views.view_my_therapists, name='view-my-therapists'),
+    path('assign-patient/', views.assign_patient, name='assign-patient'),
+    path('my-therapists/', views.view_my_therapists, name='view-my-therapists'),
+    path('request-new-therapist/', views.request_new_therapist, name='request-new-therapist'),
 ]
