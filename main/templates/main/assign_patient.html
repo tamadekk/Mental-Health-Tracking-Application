@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assign Patient - Mental Health Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Assign Patient</h1>
+      <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="btn">Assign</button>
+      </form>
+    </main>
+    <footer>
+      <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+  </body>
+</html>

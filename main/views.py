@@ -6,9 +6,9 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.http import require_POST
 
-from main.forms import DailyGoalForm, MoodEntryForm, TherapistForm
+from main.forms import DailyGoalForm, MoodEntryForm, TherapistForm, AssignPatientForm
 from main.models.therapist import Therapist
-from .models import MoodEntry, DailyGoal
+from .models import MoodEntry, DailyGoal, Therapist, TherapistPatient
 
 
 def index(request):
@@ -263,3 +263,20 @@ def delete_mood_entry(request, pk):
     mood_entry.delete()
     return redirect('mood-entries')
 
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name__in=['Therapist', 'Admin']).exists())
+def assign_patient(request):
+    if request.method == 'POST':
+        form = AssignPatientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('assign-patient')
+    else:
+        form = AssignPatientForm()
+    return render(request, 'main/assign_patient.html', {'form': form})
+
+@login_required
+@user_passes_test(lambda u: u.groups.filter(name='Patient').exists())
+def view_my_therapists(request):
+    therapist_patients = TherapistPatient.objects.filter(patient=request.user)
+    return render(request, 'main/view_my_therapists.html', {'therapist_patients': therapist_patients})

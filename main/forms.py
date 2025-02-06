@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile, DailyGoal, MoodEntry, Therapist
+
+from .models import UserProfile, DailyGoal, MoodEntry, Therapist, TherapistPatient
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField()
@@ -44,3 +45,8 @@ class TherapistForm(forms.ModelForm):
     class Meta:
         model = Therapist
         fields = ['name', 'specialization', 'phone_number', 'contact_email']
+
+class AssignPatientForm(forms.ModelForm):
+    class Meta:
+        model = TherapistPatient
+        fields = ['therapist', 'patient']

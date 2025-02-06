@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Therapists - Mental Health Tracker</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="{% url 'dashboard' %}">Home</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
+    </header>
+    <main>
+      <h1>My Therapists</h1>
+      <ul>
+        {% for therapist_patient in therapist_patients %}
+        <li>
+          <strong>{{ therapist_patient.therapist.name }}</strong> -
+          <!-- prettier ignore -->
+          {{therapist_patient.therapist.specialization }}<br />
+          <a href="mailto:{{ therapist_patient.therapist.contact_email }}"
+            >{{ therapist_patient.therapist.contact_email }}</a
+          ><br />
+          <a href="tel:{{ therapist_patient.therapist.phone_number }}"
+            >{{ therapist_patient.therapist.phone_number }}</a
+          >
+        </li>
+        {% endfor %}
+      </ul>
+    </main>
+    <footer>
+      <p>&copy; 2024 Mental Health Tracker</p>
+    </footer>
+  </body>
+</html>
