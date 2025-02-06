@@ -10,17 +10,19 @@
   <body>
     <header>
       <nav>
-        <a href="{% url 'dashboard' %}">Home</a>
-        <a href="{% url 'daily-goals' %}">Back to Goals</a>
-        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'dashboard' %}">🏠 Home</a>
+        <a href="{% url 'daily-goals' %}">🔙 Back to Goals</a>
+        <a href="{% url 'logout' %}">🚪 Logout</a>
       </nav>
     </header>
     <main>
-      <h1>Daily Goal Details</h1>
-      <p><strong>Goal:</strong> {{ daily_goal.goal }}</p>
-      <p><strong>Date:</strong> {{ daily_goal.date }}</p>
-      <p><strong>Completed:</strong> {{ daily_goal.is_completed }}</p>
-      <a href="{% url 'daily-goals' %}" class="btn">Back to Daily Goals</a>
+      <h1>Daily Goal Details 🎯</h1>
+      <div class="goal-details">
+        <p><strong>Goal:</strong> {{ daily_goal.goal }}</p>
+        <p><strong>Date:</strong> {{ daily_goal.date }}</p>
+        <p><strong>Completed:</strong> {{ daily_goal.is_completed }}</p>
+      </div>
+      <a href="{% url 'daily-goals' %}" class="btn">🔙 Back to Daily Goals</a>
     </main>
     <footer>
       <p>&copy; 2024 Mental Health Tracker</p>

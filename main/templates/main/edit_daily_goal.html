@@ -10,15 +10,15 @@
   <body>
     <header>
       <nav>
-        <a href="{% url 'dashboard' %}">Home</a>
-        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'dashboard' %}">🏠 Home</a>
+        <a href="{% url 'logout' %}">🚪 Logout</a>
       </nav>
     </header>
     <main>
-      <h1>Edit Daily Goal</h1>
+      <h1>📝 Edit Daily Goal</h1>
       <form method="post" action="{% url 'update-daily-goal' goal.pk %}">
         {% csrf_token %} {{ form.as_p }}
-        <button type="submit" class="btn btn-success btn-sm">Update</button>
+        <button type="submit" class="btn">💾 Update</button>
       </form>
     </main>
     <footer>

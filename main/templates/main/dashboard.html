@@ -11,8 +11,8 @@
   <body>
     <header>
       <nav>
-        <a href="{% url 'dashboard' %}">Home</a>
-        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'dashboard' %}">🏠 Home</a>
+        <a href="{% url 'logout' %}">🚪 Logout</a>
       </nav>
     </header>
     <main>
@@ -20,45 +20,45 @@
       <section>
         <h3>Your Mental Health Journey</h3>
         <ul>
-          <li><a href="{% url 'mood-entries' %}">View Mood Entries</a></li>
-          <li><a href="{% url 'add-mood-entry' %}">Add a Mood Entry</a></li>
+          <li><a href="{% url 'mood-entries' %}">📖 View Mood Entries</a></li>
+          <li><a href="{% url 'add-mood-entry' %}">➕ Add a Mood Entry</a></li>
         </ul>
       </section>
       <section>
-        <h3>Your Goals</h3>
+        <h3>Your Goals 🎯</h3>
         <ul>
-          <li><a href="{% url 'daily-goals' %}">View Daily Goals</a></li>
-          <li><a href="{% url 'add-daily-goal' %}">Set a New Goal</a></li>
+          <li><a href="{% url 'daily-goals' %}">📅 View Daily Goals</a></li>
+          <li><a href="{% url 'add-daily-goal' %}">➕ Set a New Goal</a></li>
         </ul>
       </section>
       <section>
-        <h3>Therapists</h3>
+        <h3>Therapists 🧑‍⚕️</h3>
         <ul>
-          <li><a href="{% url 'therapists-list' %}">Find Therapists</a></li>
+          <li><a href="{% url 'therapists-list' %}">🔍 Find Therapists</a></li>
           {% if user|has_group:"Patient" %}
           <li>
-            <a href="{% url 'view-my-therapists' %}">View My Therapists</a>
+            <a href="{% url 'view-my-therapists' %}">👩‍⚕️ View My Therapists</a>
           </li>
           {% endif %}
           <!-- prettier-ignore -->
           {% if user|has_group:"Therapist" or user|has_group:"Admin" %}
-          <li><a href="{% url 'assign-patient' %}">Assign a Patient</a></li>
+          <li><a href="{% url 'assign-patient' %}">📝 Assign a Patient</a></li>
           {% endif %}
         </ul>
       </section>
       {% if user.is_staff %}
       <section>
-        <h3>Admin Tools</h3>
+        <h3>Admin Tools 🛠️</h3>
         <ul>
           <li>
-            <a href="{% url 'admin:auth_user_changelist' %}">Manage Users</a>
+            <a href="{% url 'admin:auth_user_changelist' %}">👥 Manage Users</a>
           </li>
           <li>
             <a href="{% url 'admin:main_therapist_changelist' %}"
-              >Manage Therapists</a
+              >👩‍⚕️ Manage Therapists</a
             >
           </li>
-          <li><a href="#">View System Logs</a></li>
+          <li><a href="#">📊 View System Logs</a></li>
         </ul>
       </section>
       {% endif %}

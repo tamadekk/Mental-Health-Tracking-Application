@@ -10,12 +10,12 @@
 <body>
     <header>
         <nav>
-            <a href="{% url 'dashboard' %}">Home</a>
-            <a href="{% url 'logout' %}">Logout</a>
+            <a href="{% url 'dashboard' %}">🏠 Home</a>
+            <a href="{% url 'logout' %}">🚪 Logout</a>
         </nav>
     </header>
     <main>
-        <h1>Assign Patient</h1>
+        <h1>📝 Assign Patient</h1>
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -26,7 +26,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn">Assign</button>
+            <button type="submit" class="btn">💾 Assign</button>
         </form>
     </main>
     <footer>
