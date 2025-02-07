@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Mental Health Tracker</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
     <header>
-        <h1>Login</h1>
+      <h1 style="color: white">Login</h1>
     </header>
     <main>
-        {% if form.errors %}
-            <div class="error-message">
-                <p>Invalid input. Please try again.</p>
-            </div>
+      {% if form.errors %}
+      <div class="error-message">
+        <p>
+          You have entered an invalid username or password. Please try again.
+        </p>
+      </div>
+      {% endif %} {% if next %}
+      <div class="info-message">
+        {% if user.is_authenticated %}
+        <p>
+          Your account doesn't have access to this page. To proceed, please
+          login with an account that has access.
+        </p>
+        {% else %}
+        <p>Please login to see this page.</p>
         {% endif %}
+      </div>
+      {% endif %}
 
-        {% if next %}
-            <div class="info-message">
-                {% if user.is_authenticated %}
-                    <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
-                {% else %}
-                    <p>Please login to see this page.</p>
-                {% endif %}
-            </div>
-        {% endif %}
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.username.label_tag }} {{ form.username }}
+        </div>
+        <div class="form-group">
+          {{ form.password.label_tag }} {{ form.password }}
+        </div>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button type="submit" class="btn">Login</button>
+      </form>
 
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.username.label_tag }}
-                {{ form.username }}
-            </div>
-            <div class="form-group">
-                {{ form.password.label_tag }}
-                {{ form.password }}
-            </div>
-            <input type="hidden" name="next" value="{{ next }}">
-            <button type="submit" class="btn">Login</button>
-        </form>
-
-        <p>Don't have an account? <a href="{% url 'register' %}" class="link">Register here</a>.</p>
+      <p style="text-align: center">
+        Don't have an account?
+        <a href="{% url 'register' %}" class="link">Register here</a>.
+      </p>
     </main>
     <footer>
-        <p>&copy; 2024 Mental Health Tracker</p>
+      <p>&copy; 2024 Mental Health Tracker</p>
     </footer>
-</body>
+  </body>
 </html>

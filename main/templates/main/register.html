@@ -14,7 +14,7 @@
         </nav>
     </header>
     <main>
-        <h1>Register for Mental Health Tracker</h1>
+        <h1 style="text-align: center">Register for Mental Health Tracker</h1>
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
@@ -33,7 +33,7 @@
 
             <button type="submit" class="btn">Register</button>
         </form>
-        <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+        <p style="text-align: center">Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
     </main>
     <footer>
         <p>&copy; 2024 Mental Health Tracker</p>
