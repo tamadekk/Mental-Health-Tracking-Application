@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      {% block title %}Mental Health Tracking Application{% endblock %}
+    </title>
+  </head>
+  <body>
+    <header>
+      <h1>Mental Health Tracking Application</h1>
+      <nav>
+        <ul>
+          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+          <li><a href="{% url 'mood-entries' %}">Mood Entries</a></li>
+          <li><a href="{% url 'view-goals' %}">Goals</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+  </body>
+</html>
