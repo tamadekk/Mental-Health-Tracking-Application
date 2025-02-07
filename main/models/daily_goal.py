@@ -9,3 +9,7 @@ class DailyGoal(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.goal} on {self.date}"
+
+    def mark_as_completed(self):
+        self.is_completed = True
+        self.save()

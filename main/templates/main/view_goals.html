@@ -2,7 +2,32 @@
 <h1>Your Goals</h1>
 <ul>
   {% for goal in goals %}
-  <li>{{ goal.goal }} - {{ goal.date }}</li>
+  <li
+    style="{% if goal.is_completed %}text-decoration: line-through;{% endif %}"
+  >
+    {{ goal.goal }} - {{ goal.date }} -
+    <strong
+      >Status: {% if goal.is_completed %}Completed{% else %}Not Completed{%
+      endif %}</strong
+    >
+    <form method="post" action="{% url 'update-daily-goal' goal.pk %}">
+      {% csrf_token %}
+      <input type="hidden" name="goal" value="{{ goal.goal }}" />
+      <input type="hidden" name="date" value="{{ goal.date }}" />
+      <input
+        type="checkbox"
+        name="is_completed"
+        {%
+        if
+        goal.is_completed
+        %}checked{%
+        endif
+        %}
+      />
+      Mark as completed
+      <button type="submit">Update</button>
+    </form>
+  </li>
   {% endfor %}
 </ul>
 {% endblock %}

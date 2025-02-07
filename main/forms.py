@@ -31,10 +31,11 @@ class UserRegistrationForm(UserCreationForm):
 
 class DailyGoalForm(forms.ModelForm):
     date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    is_completed = forms.BooleanField(required=False, label='Mark as completed')
 
     class Meta:
         model = DailyGoal
-        fields = ['goal', 'date']
+        fields = ['goal', 'date', 'is_completed']
 
 class MoodEntryForm(forms.ModelForm):
     class Meta:

@@ -27,28 +27,35 @@
         <input type="date" name="date" value="{{ request.GET.date }}" />
         <button type="submit">Search</button>
       </form>
-
       {% if goals.count == 0 %}
       <p class="no-results">No goals found matching your search criteria.</p>
       {% else %}
       <ul>
         {% for goal in goals %}
-        <li class="goal-item">
-          <div class="goal-header">
-            <strong>
-              <span class="goal-date">
-                {{ goal.date|date:"F j, Y" }}
-              </span> </strong
-            ><br />
-          </div>
-          <div class="goal-details">
-            <div>
-              <p class="goal-text">
-                <strong>Title: </strong>
-                <a href="{% url 'daily-goal-detail' goal.pk %}"
-                  >{{ goal.goal }}</a
-                >
-              </p>
+        <li>
+          <!-- prettier-ignore -->
+          <strong>Status: <strong style="{% if goal.is_completed %}text-decoration:none; color:green;{% else %} color:red {% endif %}"
+            > {% if goal.is_completed %}Completed{% else %}Not Completed{% endif %}</strong></strong>
+
+          <div
+            style="{% if goal.is_completed %}text-decoration:line-through;{% endif %}"
+          >
+            <div class="goal-header">
+              <strong>
+                <span class="goal-date">
+                  {{ goal.date|date:"F j, Y" }}
+                </span> </strong
+              ><br />
+            </div>
+            <div class="goal-details">
+              <div>
+                <p class="goal-text">
+                  <strong>Title: </strong>
+                  <a href="{% url 'daily-goal-detail' goal.pk %}"
+                    >{{ goal.goal }}</a
+                  >
+                </p>
+              </div>
             </div>
             <p class="goal-user">
               <strong>Assigned to:</strong> {{ goal.user.username }}
